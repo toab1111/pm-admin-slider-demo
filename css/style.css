@@ -31,6 +31,7 @@
     .timeline-slider {
         display: flex;
         align-items: center;
+        padding: 10px;
     }
     .start-time,
     .end-time {
@@ -42,7 +43,7 @@
         background: #fceaf1;
         cursor: pointer;
         overflow: hidden;
-        width: 800px;
+        width: 850px;
     }
     .progress-bar::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -71,10 +72,77 @@
         box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.5);
         text-align: center;
     }
+    .progress-bar {
+        -webkit-appearance: none;
+        outline: none;
+        background: #fceaf1;
+        cursor: pointer;
+        overflow: hidden;
+        width: 550px;
+    }
+    .timeline-slider {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
 }
 
-@media (min-width:282px) {
-    .slider-element {
+@media (max-width:635px) {
+    .start-time,
+    .end-time {
         display: none;
+    }
+    .slider-element {
+        background-color: azure;
+        display: none;
+        margin-bottom: 16px;
+        margin-right: 16px;
+        padding: 12px;
+        border-radius: 20px;
+        box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+    .progress-bar {
+        -webkit-appearance: none;
+        outline: none;
+        background: #fceaf1;
+        cursor: pointer;
+        overflow: hidden;
+        width: 400px;
+    }
+    .timeline-slider {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+}
+
+@media (max-width:500px) {
+    .start-time,
+    .end-time {
+        display: none;
+    }
+    .slider-element {
+        background-color: azure;
+        display: none;
+        margin-bottom: 16px;
+        margin-right: 16px;
+        padding: 12px;
+        border-radius: 20px;
+        box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+    .progress-bar {
+        -webkit-appearance: none;
+        outline: none;
+        background: #fceaf1;
+        cursor: pointer;
+        overflow: hidden;
+        width: 250px;
+    }
+    .timeline-slider {
+        display: flex;
+        align-items: center;
+        padding: 10px;
     }
 }
