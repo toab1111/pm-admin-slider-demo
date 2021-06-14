@@ -73,11 +73,6 @@
         text-align: center;
     }
     .progress-bar {
-        -webkit-appearance: none;
-        outline: none;
-        background: #fceaf1;
-        cursor: pointer;
-        overflow: hidden;
         width: 550px;
     }
     .timeline-slider {
@@ -103,11 +98,6 @@
         text-align: center;
     }
     .progress-bar {
-        -webkit-appearance: none;
-        outline: none;
-        background: #fceaf1;
-        cursor: pointer;
-        overflow: hidden;
         width: 400px;
     }
     .timeline-slider {
@@ -133,11 +123,6 @@
         text-align: center;
     }
     .progress-bar {
-        -webkit-appearance: none;
-        outline: none;
-        background: #fceaf1;
-        cursor: pointer;
-        overflow: hidden;
         width: 250px;
     }
     .timeline-slider {
