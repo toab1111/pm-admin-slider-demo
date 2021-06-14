@@ -38,11 +38,6 @@
         margin: 0 10px;
     }
     .progress-bar {
-        -webkit-appearance: none;
-        outline: none;
-        background: #fceaf1;
-        cursor: pointer;
-        overflow: hidden;
         width: 850px;
     }
     .progress-bar::-webkit-slider-thumb {
