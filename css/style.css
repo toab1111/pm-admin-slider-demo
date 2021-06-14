@@ -40,13 +40,6 @@
     .progress-bar {
         width: 850px;
     }
-    .progress-bar::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 5px;
-        width: 5px;
-        background: #a64e6d;
-        box-shadow: -100vw 0 0 100vw #a64e6d;
-    }
     .time-slider {
         pointer-events: auto;
     }
