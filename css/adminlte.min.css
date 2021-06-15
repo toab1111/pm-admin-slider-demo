@@ -13478,7 +13478,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
         margin-left: .8rem;
         margin-right: .5rem;
         margin-top: -3px;
-        max-height: 45px;
+        max-height: 40px;
         width: auto
     }
 }
@@ -13490,7 +13490,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
         margin-left: .8rem;
         margin-right: .5rem;
         margin-top: -3px;
-        max-height: 38px;
+        max-height: 33px;
         width: auto
     }
 }
