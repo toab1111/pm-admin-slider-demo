@@ -7,14 +7,21 @@
     border-radius: 30px;
     border-width: 3px;
     border: 2px solid #fff;
-    opacity: .95;
-    font-size: 1.2rem;
+    opacity: .9;
+    font-size: 1.15em;
     box-sizing: content-box;
 }
 
-.daily {
+.daily,
+.backcontrol,
+.csv {
     margin-bottom: 16px;
     margin-right: 16px;
+}
+
+.backcontrol,
+.pause {
+    display: none;
 }
 
 @media (min-width:1750px) {
@@ -169,4 +176,8 @@
         align-items: center;
         padding: 10px;
     }
+}
+
+.minimize {
+    right: 4em;
 }

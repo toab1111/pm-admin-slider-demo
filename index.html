@@ -50,7 +50,7 @@
                 <!-- fullscreen -->
                 <li class="brand-link logo-switch">
                     <a href="https://www.chula.ac.th/">
-                        <img src="image/Logo-chula.jpg" alt="Chula Logo" class="brand-image " style="opacity: 1">
+                        <img src="image/Logo-chula.png" alt="Chula Logo" class="brand-image " style="opacity: 1">
                     </a>
                     <a href="https://www.pmdu.go.th/">
                         <img src="image/pmdu-logo-s.png" alt="pmdu Logo" class="brand-image " style="opacity: 1">
@@ -76,7 +76,8 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-light-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link navbar-info">
+            <a href="#" class="brand-link navbar-light">
+                <img src="image/Logo-chula.png" alt="Chula Logo" class="brand-image img-circle elevation-13" style="opacity: .8">
                 <span class="brand-text font-weight-light">Chula firm map</span>
             </a>
 
@@ -151,10 +152,10 @@
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
-        <div id="mapid" style="width: 100%; height: calc(100vh - 90px); position: relative; outline: none; ">
-            <div style="font-size: 1.25rem" class="leaflet-bottom leaflet-right slider-element">
+        <div id="mapid" style="width: 100%; height: calc(100vh - 80px); position: relative; outline: none; ">
+            <div style="font-size: 1.2em" class="leaflet-bottom leaflet-right slider-element">
                 <div class="leaflet-control">
-                    <span id="text"></span>
+                    <span>วันที่ : </span><span id="text"></span>
                     <div>
                         <span>  เลือกช่วงเวลา : </span><input type="text" id="demo-6" />
                     </div>
@@ -164,15 +165,18 @@
                             <input type="range" class="progress-bar" />
                             <span class="end-time">100</span>
                         </div>
-                        <button class="play  btn-success">Play</button>
-                        <button class="pause  btn-danger">Pause</button>
-                        <button class="realtime btn-primary">ปัจจุบัน</button>
+                        <button class="play btn btn-success">Play</button>
+                        <button class="pause btn btn-danger">Pause</button>
+                        <button class="realtime btn btn-primary">ปัจจุบัน</button>
+                        <button class="minisize btn btn-secondary">ย่อ</button>
                     </div>
                 </div>
             </div>
-            <div style="font-size: 1.25rem" class="leaflet-bottom leaflet-right">
+            <div style="font-size: 1.5em" class="leaflet-bottom leaflet-right">
                 <div class="leaflet-control ">
-                    <button class=" btn-success daily">ย้อนหลังรายวัน</button>
+                    <button class="btn btn-success daily">ย้อนหลังรายวัน</button>
+                    <button class="btn btn-dark backcontrol"></button>
+                    <button class="btn btn-warning csv">CSV</button>
                 </div>
             </div>
 
@@ -185,7 +189,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
+    <!-- footer -->
     <footer class="main-footer ">
         <div class="float-right d-none d-sm-block ">
             <b>Version</b> 3.1.0
@@ -206,6 +210,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js "></script>
     <!-- jQuery -->
     <script src="js/jquery.min.js "></script>
+    <!-- papapase -->
+    <script src="js/papaparse.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="js/bootstrap.bundle.min.js "></script>
     <!-- AdminLTE App -->
@@ -295,7 +301,7 @@
 
 
         var overlayMaps = {
-            'temp': PM25
+            'PM2.5': PM25
         };
 
         L.control.layers(baseMaps, overlayMaps).addTo(mymap);

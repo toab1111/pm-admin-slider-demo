@@ -7,21 +7,18 @@ const end_time = document.querySelector('.end-time');
 const bt_daily = document.querySelector('.daily');
 const bt_realtime = document.querySelector('.realtime');
 const slider_time_ele = document.querySelector('.slider-element');
+const bt_minisize = document.querySelector('.minisize');
+const bt_backcontrol = document.querySelector('.backcontrol');
+const bt_csvdownloader = document.querySelector('.csv');
 var myTimer;
-// var api = "https://www.cusense.net:8082/api/v1/sensorData/realtime/all";
-// function check_api(status = 'realtime') {
-//     if (status == 'realtime') {
-//         var api = "https://www.cusense.net:8082/api/v1/sensorData/realtime/all";
-//     } else {
-//         var api = "https://cusense.net:8082/api/v1/sensorData/allStation/daily/";
-//     }
-//     return api
-// }
+
+
 
 function daily() {
     status = 'daily'
-    slider_time_ele.style.display = "block";
+    slider_time_ele.style.display = "inline-block";
     bt_daily.style.display = "none";
+    bt_csvdownloader.style.display = "none";
 }
 
 function realtime() {
@@ -30,11 +27,59 @@ function realtime() {
     PM25.clearLayers();
     getPM()
     slider_time_ele.style.display = "none";
-    bt_daily.style.display = "block";
+    bt_daily.style.display = "inline-block";
+    bt_csvdownloader.style.display = "inline-block";
 }
+
+function minisize() {
+    status = 'realtime'
+    slider_time_ele.style.display = "none";
+    bt_backcontrol.style.display = "inline-block";
+    bt_csvdownloader.style.display = "inline-block";
+}
+
+function backcontrol() {
+    status = 'realtime'
+    slider_time_ele.style.display = "inline-block";
+    bt_backcontrol.style.display = "none";
+    bt_csvdownloader.style.display = "none";
+}
+
+function geojsonTOjson(geojson) {
+    json = []
+    array = geojson.features
+    for (let index = 0; index < array.length; index++) {
+
+        const element = array[index].properties;
+        element.latitude = array[index].geometry.coordinates[0];
+        element.longitude = array[index].geometry.coordinates[1];
+        json.push(element);
+    }
+    return json
+}
+
+function csvdownloader() {
+    json = geojsonTOjson(geojson)
+    var data = Papa.unparse(json);
+    var csv = data;
+    var downloadLink = document.createElement("a");
+    var blob = new Blob(["\ufeff", csv]);
+    var url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = "pm2.5_data.csv";
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
+
 
 bt_daily.addEventListener('click', daily);
 bt_realtime.addEventListener('click', realtime);
+bt_minisize.addEventListener('click', minisize);
+bt_backcontrol.addEventListener('click', backcontrol);
+bt_csvdownloader.addEventListener('click', csvdownloader);
+
 
 var min = new Date(Date.now() - (86400000 * 300));
 var max = new Date(Date.now() - 86400000);
@@ -64,7 +109,6 @@ function pick_date(start, end) {
         dataTime.push(endDate - ((1000 * 60 * 60 * 24) * index));
     }
 
-    console.log(dataTime);
     var b = progressBarElem;
     var mintime = Math.min.apply(Math, dataTime);
     var maxtime = Math.max.apply(Math, dataTime);;
@@ -79,10 +123,12 @@ function pick_date(start, end) {
     //max
     const formattedMax = getDateMount(maxtime);
     end_time.innerHTML = formattedMax;
+    b.value = mintime
+    update(mintime);
 
 }
 
-
+var geojson = {};
 
 function CreateGeoJson(station) {
     var geojson = {};
@@ -100,26 +146,29 @@ function CreateGeoJson(station) {
             const humid = station[key].data[0].humid;
             const temp = station[key].data[0].temp;
             const sensorColor = getSensorColor(station[key].data[0].pm25);
-            // console.log("ชื่อ: " + station_name + " พิกัด (" + lat + "," + lon + ")" + " เวลา: " + time + " pm2.5 :" + pm25 + " pm10 :" + pm10);
-            var newFeature = {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [parseFloat(lon),
-                        parseFloat(lat)
-                    ]
-                },
-                "properties": {
-                    "ชื่อสถานี": station_name,
-                    "เวลา": time,
-                    "pm2.5": pm25,
-                    "pm10": pm10,
-                    "ความชื้น": humid,
-                    "อุณหภูมิ": temp,
-                    "sensorColor": sensorColor
+            if (pm25) {
+                var newFeature = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [parseFloat(lon),
+                            parseFloat(lat)
+                        ]
+                    },
+                    "properties": {
+                        "ชื่อสถานี": station_name,
+                        "เวลา": time,
+                        "pm2.5": pm25,
+                        "pm10": pm10,
+                        "ความชื้น": humid,
+                        "อุณหภูมิ": temp,
+                        "sensorColor": sensorColor
+                    }
                 }
+                geojson['features'].push(newFeature);
             }
-            geojson['features'].push(newFeature);
+            // console.log("ชื่อ: " + station_name + " พิกัด (" + lat + "," + lon + ")" + " เวลา: " + time + " pm2.5 :" + pm25 + " pm10 :" + pm10);
+
         }
     }
     return geojson;
@@ -163,7 +212,7 @@ function getPM(api = "https://www.cusense.net:8082/api/v1/sensorData/realtime/al
     }).then(function(respone) {
         let station = respone.data;
         geojson = CreateGeoJson(station)
-        console.log(geojson);
+            // console.log(geojson);
         L.geoJSON(geojson, {
             pointToLayer: createCircleMarker,
             onEachFeature: onEachFeature
@@ -205,9 +254,10 @@ function update(t) {
     date_api = getYearMountDate(textDate);
     textSpan.innerHTML = getDateMountYear(textDate); // 9/17/2016
     start_time.innerHTML = getDateMount(textDate);
-    PM25.clearLayers();
+    bt_backcontrol.innerHTML = getDateMountYear(textDate);
+    // PM25.clearLayers();
     var api = "https://cusense.net:8082/api/v1/sensorData/allStation/daily/" + date_api;
-    console.log(api);
+    // console.log(api);
     getPM(api)
 }
 
@@ -215,11 +265,14 @@ function update(t) {
 function onTimeUpdate() {
     var t_input = parseInt(this.value);
     update(t_input);
+    PM25.clearLayers();
 
 }
 
 
 function onPlay() {
+    pauseBtnElem.style.display = "inline-block";
+    playBtnElem.style.display = "none";
     clearInterval(myTimer);
     myTimer = setInterval(function() {
         var b = progressBarElem;
@@ -231,14 +284,19 @@ function onPlay() {
         if (t == 0) { t = +min; }
         progressBarElem.value = +t;
         update(t);
-    }, 2100);
+        PM25.clearLayers();
+    }, 2222);
 }
 
 function onPause() {
     clearInterval(myTimer);
+    playBtnElem.style.display = "inline-block";
+    pauseBtnElem.style.display = "none";
 }
 
 
 progressBarElem.addEventListener('input', onTimeUpdate);
 playBtnElem.addEventListener('click', onPlay);
 pauseBtnElem.addEventListener('click', onPause);
+
+console.log(geojson);
