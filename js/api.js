@@ -299,4 +299,4 @@ progressBarElem.addEventListener('input', onTimeUpdate);
 playBtnElem.addEventListener('click', onPlay);
 pauseBtnElem.addEventListener('click', onPause);
 
-console.log(geojson);
+// console.log(geojson);
