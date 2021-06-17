@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-measure@3.1.0/dist/leaflet-measure.css" />
     <!-- lightpick.css-->
     <link rel="stylesheet" type="text/css" href="css/lightpick.css">
+    <!-- pretty-checkbox -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
+
 
 
 </head>
@@ -42,9 +45,7 @@
                     <a href="#" class="nav-link">หน้าหลัก</a>
                 </li> -->
 
-
             </ul>
-
 
             <ul class="navbar-nav ml-auto">
                 <!-- fullscreen -->
@@ -152,7 +153,9 @@
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
+
         <div id="mapid" style="width: 100%; height: calc(100vh - 80px); position: relative; outline: none; ">
+
             <div style="font-size: 1.2em" class="leaflet-bottom leaflet-right slider-element">
                 <div class="leaflet-control">
                     <span>วันที่ : </span><span id="text"></span>
@@ -173,15 +176,14 @@
                 </div>
             </div>
             <div style="font-size: 1.5em" class="leaflet-bottom leaflet-right">
-                <div class="leaflet-control ">
-                    <button class="btn btn-success daily">ย้อนหลังรายวัน</button>
+                <div class="leaflet-control">
+                    <button class=" btn btn-success daily">ย้อนหลังรายวัน</button>
                     <button class="btn btn-dark backcontrol"></button>
                     <button class="btn btn-warning csv">CSV</button>
                 </div>
             </div>
 
         </div>
-
 
 
 
@@ -222,90 +224,14 @@
     <script src="center-icons/L.Control.MapCenterCoord.js "></script>
     <!--leaflet-measure.min.js-->
     <script src="js/leaflet-measure.min.js "></script>
-    <!--time-slider-->
+    <!--lightpick-->
     <script src="js/lightpick.js "></script>
+    <!--time-slider-->
     <script src="js/detail.js "></script>
     <script src="js/api.js "></script>
+    <script src="js/map.js"></script>
 
 
-    <script>
-        var openstreetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://openstreetmap.org/copyright ">OpenStreetMap</a> contributors',
-            maxZoom: 18,
-            tileSize: 512,
-            zoomOffset: -1,
-            crs: L.CRS.EPSG4326
-
-        })
-
-        var mapLink = '<a href="http://www.esri.com/ ">Esri</a>',
-            wholink = 'i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-            mapLinkUrl = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-            mapLinkAttr = '&copy; ' + mapLink + ', ' + wholink;
-
-        var Satellite = L.tileLayer(mapLinkUrl, {
-            attribution: mapLinkAttr,
-            crs: L.CRS.EPSG4326
-        });
-
-        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-            maxZoom: 20,
-            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-            crs: L.CRS.EPSG4326
-        });
-
-        var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-            maxZoom: 20,
-            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-            crs: L.CRS.EPSG4326
-        });
-
-        var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-            maxZoom: 20,
-            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-            crs: L.CRS.EPSG4326
-        });
-
-        var PM25 = L.layerGroup();
-
-        var mymap = L.map('mapid', {
-            zoomControl: false,
-            layers: [googleStreets, PM25],
-            timeDimension: true,
-            timeDimensionControl: true,
-        }).setView([13.8, 100.5], 5);
-
-
-
-        baseMaps = {
-            'GoogleStreets': googleStreets,
-            'Openstreetmap': openstreetmap,
-            'Satellite Geoeye': Satellite,
-            'GoogleSat': googleSat,
-            'GoogleHybrid': googleHybrid,
-        }
-
-        var positron = new L.Control.MapCenterCoord().addTo(mymap);
-        var measureControl = new L.Control.Measure({
-            primaryLengthUnit: 'kilometers',
-            secondaryLengthUnit: 'meters',
-            primaryAreaUnit: 'sqmeters',
-            activeColor: '#b41919',
-            completedColor: '#b41919'
-        });
-        measureControl.addTo(mymap);
-        // scale bar
-        L.control.scale({
-            imperial: false
-        }).addTo(mymap);
-
-
-        var overlayMaps = {
-            'PM2.5': PM25
-        };
-
-        L.control.layers(baseMaps, overlayMaps).addTo(mymap);
-    </script>
 </body>
 
 </html>
