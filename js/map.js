@@ -92,9 +92,9 @@ command.onAdd = function(map) {
     div.innerHTML = `
         <div class="leaflet-control-layers leaflet-control-layers-expanded leaflet-control-layers-overlays">
         <form>
-        <div class="pretty p-switch p-fill">
+        <div class="pretty p-round p-default p-pulse">
             <input id="PM25" onclick=togglePM25(this.checked) type="checkbox" checked></input>
-            <div class="state">
+            <div class="state p-success">
                 <label>PM2.5</label>
             </div>
         </div>
